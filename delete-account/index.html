@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-platform="android">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,6 +74,9 @@
 
   /* Hide the language that is not selected. */
   html[lang="ru"] [lang="en"]:not(html), html[lang="en"] [lang="ru"]:not(html) { display: none !important; }
+  /* Hide the instructions for the platform that is not selected. */
+  html[data-platform="android"] [data-platform="ios"]:not(html),
+  html[data-platform="ios"] [data-platform="android"]:not(html) { display: none !important; }
 
   header.top {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -130,7 +133,13 @@
 
   @media (min-width: 720px) {
     .steps.two { grid-template-columns: 1fr 1fr; }
+    .steps.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .steps.three .step { grid-template-columns: minmax(0, 1fr); }
+    .steps.three .phone { max-width: 100%; }
   }
+
+  .platform { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 40px 0 16px; }
+  .platform h2 { margin: 0; }
 
   .lists { display: grid; gap: 16px; }
   @media (min-width: 720px) { .lists { grid-template-columns: 1fr 1fr; } }
@@ -181,9 +190,15 @@
     <p lang="en">You can delete your Romashka account at any time right in the app — it takes less than a minute. If you no longer have the app, write to us and we will delete the account for you.</p>
   </section>
 
-  <h2><span lang="ru">Как удалить аккаунт в приложении</span><span lang="en">How to delete your account in the app</span></h2>
+  <div class="platform">
+    <h2><span lang="ru">Как удалить аккаунт в приложении</span><span lang="en">How to delete your account in the app</span></h2>
+    <div class="seg" role="group" aria-label="Platform">
+      <button type="button" data-set-platform="android" aria-pressed="true">Android</button>
+      <button type="button" data-set-platform="ios" aria-pressed="false">iPhone</button>
+    </div>
+  </div>
 
-  <div class="steps">
+  <div class="steps" data-platform="android">
     <article class="card step">
       <div class="step-head">
         <span class="num">1</span>
@@ -222,6 +237,62 @@
           </div>
         </div>
         <img class="phone" src="img/step3-confirm.webp" width="720" height="1353" alt="Диалог подтверждения удаления аккаунта" loading="lazy">
+      </article>
+    </div>
+  </div>
+
+  <div class="steps" data-platform="ios">
+    <article class="card step">
+      <div class="step-head">
+        <span class="num">1</span>
+        <div>
+          <h3 lang="ru">Откройте профиль</h3>
+          <h3 lang="en">Open your profile</h3>
+          <p lang="ru">На главном экране нажмите на аватар в правом верхнем углу.</p>
+          <p lang="en">On the home screen, tap your avatar in the top-right corner.</p>
+        </div>
+      </div>
+      <div class="shot"><img src="img/ios-step1-home.webp" width="1080" height="322" alt="Главный экран приложения на iPhone, аватар профиля в правом верхнем углу" loading="lazy"></div>
+    </article>
+
+    <div class="steps three">
+      <article class="card step">
+        <div class="step-head">
+          <span class="num">2</span>
+          <div>
+            <h3 lang="ru">Откройте настройки профиля</h3>
+            <h3 lang="en">Open profile settings</h3>
+            <p lang="ru">На экране профиля снова нажмите на аватар в правом верхнем углу.</p>
+            <p lang="en">On the profile screen, tap the avatar in the top-right corner again.</p>
+          </div>
+        </div>
+        <img class="phone" src="img/ios-step2-profile.webp" width="720" height="1565" alt="Экран профиля на iPhone, аватар в правом верхнем углу" loading="lazy">
+      </article>
+
+      <article class="card step">
+        <div class="step-head">
+          <span class="num">3</span>
+          <div>
+            <h3 lang="ru">Нажмите «Удалить аккаунт»</h3>
+            <h3 lang="en">Tap “Удалить аккаунт” (Delete account)</h3>
+            <p lang="ru">Кнопка находится под кнопкой «Выйти из профиля».</p>
+            <p lang="en">It is below “Выйти из профиля” (Log out).</p>
+          </div>
+        </div>
+        <img class="phone" src="img/ios-step3-edit.webp" width="720" height="1565" alt="Настройки профиля на iPhone с кнопкой «Удалить аккаунт»" loading="lazy">
+      </article>
+
+      <article class="card step">
+        <div class="step-head">
+          <span class="num">4</span>
+          <div>
+            <h3 lang="ru">Подтвердите удаление</h3>
+            <h3 lang="en">Confirm</h3>
+            <p lang="ru">Нажмите «Удалить». Аккаунт удаляется сразу, и приложение вернётся на экран входа.</p>
+            <p lang="en">Tap “Удалить” (Delete). The account is deleted immediately and the app returns to the sign-in screen.</p>
+          </div>
+        </div>
+        <img class="phone" src="img/ios-step4-confirm.webp" width="720" height="1565" alt="Диалог подтверждения удаления аккаунта на iPhone" loading="lazy">
       </article>
     </div>
   </div>
@@ -273,7 +344,7 @@
       <p class="muted" lang="ru">Мы можем попросить подтвердить, что номер принадлежит вам.</p>
       <p class="muted" lang="en">We may ask you to confirm that the number is yours.</p>
     </div>
-    <a class="btn" href="mailto:romashkawork33@gmail.com?subject=%D0%A3%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B0%D0%BA%D0%BA%D0%B0%D1%83%D0%BD%D1%82%D0%B0%20%2F%20Account%20deletion">romashkawork33@<wbr>gmail.com</a>
+    <a class="btn" href="mailto:romashkawork33@gmail.com?subject=%D0%A3%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B0%D0%BA%D0%BA%D0%B0%D1%83%D0%BD%D1%82%D0%B0%20%2F%20Account%20deletion">romashkawork33@gmail.com</a>
   </section>
 
   <footer>
@@ -303,6 +374,29 @@
       b.addEventListener("click", function () {
         apply(b.dataset.setLang);
         try { localStorage.setItem("lang", b.dataset.setLang); } catch (e) {}
+      });
+    });
+
+    var platformButtons = document.querySelectorAll("[data-set-platform]");
+    function applyPlatform(platform) {
+      root.dataset.platform = platform;
+      platformButtons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.setPlatform === platform)); });
+    }
+    var platform = new URLSearchParams(location.search).get("platform");
+    if (platform !== "android" && platform !== "ios") {
+      try { platform = localStorage.getItem("platform"); } catch (e) { platform = null; }
+    }
+    if (platform !== "android" && platform !== "ios") {
+      // iPadOS reports itself as a Mac; a touch screen tells them apart.
+      var ua = navigator.userAgent || "";
+      var isApple = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+      platform = isApple ? "ios" : "android";
+    }
+    applyPlatform(platform);
+    platformButtons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        applyPlatform(b.dataset.setPlatform);
+        try { localStorage.setItem("platform", b.dataset.setPlatform); } catch (e) {}
       });
     });
   })();
